@@ -1,0 +1,192 @@
+//Group C112 "C112 Room"
+Group Environment "Environment" <vacation>
+//Light Control Panel
+//Switch Light_1 "Light1" <light>  {channel = "mqtt:topic:hivemqbroker:nodemcu:light_1"}
+Switch Sonoff "Sonoff" <poweroutlet_uk>  {channel= "mqtt:topic:hivemqbroker:nodemcu:sonoff"}//,expire="3s,command=OFF"} 
+Switch light_truong "Light" <light> {channel= "mqtt:topic:hivemqbroker:nodemcu:light_truong"}
+
+// QUAN TRAC MOI 
+Number Moisture "Bụi [%.1f %%]" <error> {channel="mqtt:topic:hivemqbroker:nodemcu:moisture"}
+Number Humidity "Độ ẩm [%.1f %%]" <humidity> {channel ="mqtt:topic:hivemqbroker:nodemcu:humidity"}
+Number Air "Chất lượng không khí [%.1f %%]" <smoke>  {channel ="mqtt:topic:hivemqbroker:nodemcu:air"}
+
+
+//Control Panel
+//Switch Fan "Fan"  	<fan_ceiling> 	(C112) 
+//Switch Ac "Ac"  	<player> 		(C112) 
+
+//Subscription Panel
+Number Temperature "Temperature [%.1f *C]" 	<temperature> (C112) {channel = "mqtt:topic:hivemqbroker:nodemcu:temperature"}
+//Number Human "Human [%d]" 					<parents_1_3> (C112) 
+
+
+Group:String place1 "Computer"  <screen> {channel = "mqtt:topic:hivemqbroker:nodemcu:place1" }
+Group:String place2 "3D_Printer" <settings> {channel = "mqtt:topic:hivemqbroker:nodemcu:place2" }
+Group:String place3 "Weldering Machine" <pump> {channel = "mqtt:topic:hivemqbroker:nodemcu:place3" }
+Group:String place4 "Oscilloscope"  <receiver> {channel = "mqtt:topic:hivemqbroker:nodemcu:place4" }
+
+Number place1_ID <keyring> {channel = "mqtt:topic:hivemqbroker:nodemcu:place1_ID" }
+String place1_Name <boy_5> {channel = "mqtt:topic:hivemqbroker:nodemcu:place1_Name" }
+Number place1_MSV <niveau>  {channel = "mqtt:topic:hivemqbroker:nodemcu:place1_MSV" }
+String place1_Class <group> {channel = "mqtt:topic:hivemqbroker:nodemcu:place1_Class" }
+
+Number place2_ID <keyring> {channel = "mqtt:topic:hivemqbroker:nodemcu:place2_ID" }
+String place2_Name <boy_5> {channel = "mqtt:topic:hivemqbroker:nodemcu:place2_Name" }
+Number place2_MSV <niveau> {channel = "mqtt:topic:hivemqbroker:nodemcu:place2_MSV" }
+String place2_Class <group> {channel = "mqtt:topic:hivemqbroker:nodemcu:place2_Class" }
+
+Number place3_ID <keyring> {channel = "mqtt:topic:hivemqbroker:nodemcu:place3_ID" }
+String place3_Name <boy_5> {channel = "mqtt:topic:hivemqbroker:nodemcu:place3_Name" }
+Number place3_MSV <niveau> {channel = "mqtt:topic:hivemqbroker:nodemcu:place3_MSV" }
+String place3_Class <group> {channel = "mqtt:topic:hivemqbroker:nodemcu:place3_Class" }
+
+Number place4_ID <keyring> {channel = "mqtt:topic:hivemqbroker:nodemcu:place4_ID" }
+String place4_Name <boy_5> {channel = "mqtt:topic:hivemqbroker:nodemcu:place4_Name" }
+Number place4_MSV <niveau> {channel = "mqtt:topic:hivemqbroker:nodemcu:place4_MSV" }
+String place4_Class <group> {channel = "mqtt:topic:hivemqbroker:nodemcu:place4_Class" }
+
+DateTime CurrentTime "Time [%1$tH:%1$tM:%1$tS]" <time> {channel="ntp:ntp:demo:dateTime"}
+//DateTime time "Time [%1$tR]" <time> {channel=""} [%1$tA, %1$td.%1$tm.%1$tY]
+
+DateTime CurrentDate   "Date [%1$tA, %1$tb %1$te,%1$tY]"   <calendar>  { channel="ntp:ntp:demo:dateTime" }
+//Number Booking "Time Booking" <time> 
+//Number Timeleft "Time left [%d minutes]" <time> 
+
+
+//Thiet bi 1
+Number dat_sang_1
+Number chot_sang_1
+Switch flag1
+Switch flag2
+Switch flag3
+Switch flag4
+Switch flag5
+
+Number dat_chieu_1
+Number chot_chieu_1
+Switch flag6
+Switch flag7
+Switch flag8
+Switch flag9
+Switch flag10
+
+//Thiet bi 2
+Number dat_sang_2
+Number chot_sang_2
+Switch flag11
+Switch flag12
+Switch flag13
+Switch flag14
+Switch flag15
+
+Number dat_chieu_2
+Number chot_chieu_2
+Switch flag16
+Switch flag17
+Switch flag18
+Switch flag19
+Switch flag20
+
+//Thiet bi 3
+Number dat_sang_3
+Number chot_sang_3
+Switch flag21
+Switch flag22
+Switch flag23
+Switch flag24
+Switch flag25
+
+Number dat_chieu_3
+Number chot_chieu_3
+Switch flag26
+Switch flag27
+Switch flag28
+Switch flag29
+Switch flag30
+
+//Thiet bi 4
+Number dat_sang_4
+Number chot_sang_4
+Switch flag31
+Switch flag32
+Switch flag33
+Switch flag34
+Switch flag35
+
+Number dat_chieu_4
+Number chot_chieu_4
+Switch flag36
+Switch flag37
+Switch flag38
+Switch flag39
+Switch flag40
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+Number Fon_Timer_Selector "Timer duration"
+Number Fon_Timer_Remaining "Remaining minutes [%s]" 
+
+// additional items so I can see the start/stop times on the sitemap
+DateTime Fon_Timer_DateTime_Start  "Last Start/Update [%1$tA, %1$tm/%1$td, %1$tI:%1$tM %1$tp]"    
+DateTime Fon_Timer_DateTime_Stop  "Last Stopped [%1$tA, %1$tm/%1$td, %1$tI:%1$tM %1$tp]" 
+*/
+
+
+
+
+
+
+
+
+//Group:String place5 "Oscilloscope"  <receiver> {channel = "mqtt:topic:hivemqbroker:nodemcu:place5" }
+//Group:String place6 "Oscilloscope" <receiver> {channel = "mqtt:topic:hivemqbroker:nodemcu:place6" }
+//Group:String place7 "Space" <parents_1_1> {channel = "mqtt:topic:hivemqbroker:nodemcu:place7" }
+//Group:String place8 "Space" <parents_6_6> {channel = "mqtt:topic:hivemqbroker:nodemcu:place8" }
+
+/*
+Number place5_ID <keyring> {channel = "mqtt:topic:hivemqbroker:nodemcu:place5_ID" }
+String place5_Name <boy_5> {channel = "mqtt:topic:hivemqbroker:nodemcu:place5_Name" }
+Number place5_MSV <niveau> {channel = "mqtt:topic:hivemqbroker:nodemcu:place5_MSV" }
+String place5_Class <group> {channel = "mqtt:topic:hivemqbroker:nodemcu:place5_Class" }
+
+Number place6_ID <keyring> {channel = "mqtt:topic:hivemqbroker:nodemcu:place6_ID" }
+String place6_Name <boy_5> {channel = "mqtt:topic:hivemqbroker:nodemcu:place6_Name" }
+Number place6_MSV <niveau> {channel = "mqtt:topic:hivemqbroker:nodemcu:place6_MSV" }
+String place6_Class <group> {channel = "mqtt:topic:hivemqbroker:nodemcu:place6_Class" }
+
+Number place7_ID <keyring> {channel = "mqtt:topic:hivemqbroker:nodemcu:place7_ID" }
+String place7_Name <boy_5> {channel = "mqtt:topic:hivemqbroker:nodemcu:place7_Name" }
+Number place7_MSV <niveau> {channel = "mqtt:topic:hivemqbroker:nodemcu:place7_MSV" }
+String place7_Class <group> {channel = "mqtt:topic:hivemqbroker:nodemcu:place7_Class" }
+
+Number place8_ID <keyring> {channel = "mqtt:topic:hivemqbroker:nodemcu:place8_ID" }
+String place8_Name <boy_5> {channel = "mqtt:topic:hivemqbroker:nodemcu:place8_Name" }
+Number place8_MSV <niveau> {channel = "mqtt:topic:hivemqbroker:nodemcu:place8_MSV" }
+String place8_Class <group> {channel = "mqtt:topic:hivemqbroker:nodemcu:place8_Class" } 
+*/
+

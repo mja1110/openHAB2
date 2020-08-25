@@ -1,0 +1,34 @@
+String relay1 "Relay 1"  {channel = "mqtt:topic:causonghan:nodemcu:relay1"}
+String relay2 "Relay 2"  {channel = "mqtt:topic:causonghan:nodemcu:relay2"}
+String relay3 "Relay 3"  {channel = "mqtt:topic:causonghan:nodemcu:relay3"}
+String relay4 "Relay 4"  {channel = "mqtt:topic:causonghan:nodemcu:relay4"}
+String relay5 "Relay 5"  {channel = "mqtt:topic:causonghan:nodemcu:relay5"}
+String relay6 "Relay 6"  {channel = "mqtt:topic:causonghan:nodemcu:relay6"}
+String relay7 "Relay 7"  {channel = "mqtt:topic:causonghan:nodemcu:relay7"}
+String relay8 "Relay 8"  {channel = "mqtt:topic:causonghan:nodemcu:relay8"}
+String relay9 "Relay 9"  {channel = "mqtt:topic:causonghan:nodemcu:relay9"}
+String relay10 "Relay 10"  {channel = "mqtt:topic:causonghan:nodemcu:relay10"}
+String relay11 "Relay 11"  {channel = "mqtt:topic:causonghan:nodemcu:relay11"}
+String relay12 "Relay 12"  {channel = "mqtt:topic:causonghan:nodemcu:relay12"}
+String relay13 "Relay 13"  {channel = "mqtt:topic:causonghan:nodemcu:relay13"}
+String relay14 "Relay 14"  {channel = "mqtt:topic:causonghan:nodemcu:relay14"}
+String relay15 "Relay 15"  {channel = "mqtt:topic:causonghan:nodemcu:relay15"}
+String relay16 "Relay 16"  {channel = "mqtt:topic:causonghan:nodemcu:relay16"}
+String relay17 "Relay 17"  {channel = "mqtt:topic:causonghan:nodemcu:relay17"}
+String relay18 "Relay 18"  {channel = "mqtt:topic:causonghan:nodemcu:relay18"}
+String relay19 "Relay 19"  {channel = "mqtt:topic:causonghan:nodemcu:relay19"}
+String relay20 "Relay 20"  {channel = "mqtt:topic:causonghan:nodemcu:relay20"}
+
+
+String switch1 "Switch 1"  {channel = "mqtt:topic:causonghan:nodemcu:switch1"}
+String switch2 "Switch 2"  {channel = "mqtt:topic:causonghan:nodemcu:switch2"}
+String switch3 "Switch 3"  {channel = "mqtt:topic:causonghan:nodemcu:switch3"}
+String switch4 "Switch 4"  {channel = "mqtt:topic:causonghan:nodemcu:switch4"}
+String switch5 "Switch 5"  {channel = "mqtt:topic:causonghan:nodemcu:switch5"}
+String switch6 "Switch 6"  {channel = "mqtt:topic:causonghan:nodemcu:switch6"}
+String switch7 "Switch 7"  {channel = "mqtt:topic:causonghan:nodemcu:switch7"}
+String switch8 "Switch 8"  {channel = "mqtt:topic:causonghan:nodemcu:switch8"}
+String switch9 "Switch 9"  {channel = "mqtt:topic:causonghan:nodemcu:switch9"}
+String switch10 "Switch 10"  {channel = "mqtt:topic:causonghan:nodemcu:switch10"}
+String switch11 "Switch 11"  {channel = "mqtt:topic:causonghan:nodemcu:switch11"}
+String switch12 "Switch 12"  {channel = "mqtt:topic:causonghan:nodemcu:switch12"}

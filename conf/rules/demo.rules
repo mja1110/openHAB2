@@ -1,0 +1,710 @@
+import java.util.Random
+
+var Timer timer = null
+var Timer timerleft = null
+val resList = newArrayList("640/480", "320/240", "480/360")
+val urlList = newArrayList("https://www.fillmurray.com", "https://www.fillmurray.com/g",
+                 "https://www.placecage.com", "https://www.placecage.com/c", "https://www.placecage.com/g")
+val Random random = new Random()
+
+/**
+ * This is a demo rule which simulates a real dimmer by reacting to increase/decrease commands
+ * and posting an updated state on the bus 
+ */
+rule "Dimmed Light"
+when
+    Item DimmedLight received command
+then
+    if ((receivedCommand == INCREASE) || (receivedCommand == DECREASE)) {
+        var Number percent = 0
+        if (DimmedLight.state instanceof DecimalType) percent = DimmedLight.state as DecimalType
+
+        if (receivedCommand == INCREASE) percent = percent + 5
+        if (receivedCommand == DECREASE) percent = percent - 5
+
+        if (percent < 0)   percent = 0
+        if (percent > 100) percent = 100
+        postUpdate(DimmedLight, percent);
+    }
+end
+/*
+rule "Timer Demo"
+when
+    Item Sonoff received command
+then
+    if (receivedCommand == ON) {
+        if (timer === null) {
+            // first ON command, so create a timer to turn the light off again
+            timer = createTimer(now.plusSeconds(5)) [|
+                sendCommand(Sonoff, OFF)
+            ]
+        } else {
+            // subsequent ON command, so reschedule the existing timer
+            timer.reschedule(now.plusSeconds(5))
+        }
+    } else if (receivedCommand == OFF) {
+        // remove any previously scheduled timer
+        if (timer !== null) {
+            timer.cancel
+            timer = null
+        }
+    }
+end
+*/
+/**
+ * The following rules help initializing the demo items with some helpful states.
+ */
+rule "Initialize light states"
+when
+    System started
+then
+    Lights?.members.forEach(light|
+        postUpdate(light, if (Math::random > 0.7) ON else OFF)
+    )
+end
+
+rule "Initialize heating states"
+when
+    System started
+then
+    Heating?.members.forEach(heating|
+        postUpdate(heating, if (Math::random > 0.8) ON else OFF)
+    )
+    postUpdate(Temperature_Setpoint, 22)
+end
+
+rule "Initialize contact states"
+when
+    System started
+then
+    Windows?.members.forEach(window|
+        postUpdate(window, if (Math::random > 0.5) OPEN else CLOSED)
+    )
+end
+
+
+rule "Initialize Location"
+when
+    System started
+then
+    location.postUpdate(new PointType("16.067781, 108.154957"))
+end
+
+rule "Set random room temperatures"
+when
+    System started or
+    Time cron "0 0/5 * * * ?"
+then
+    Temperature?.members.forEach(temperature|
+        postUpdate(temperature, 20.0 + (25.0 - (Math::random * 50.0).intValue) / 10.0)
+    )
+end
+
+rule "Set daily max and min temperature"
+when
+    Item Weather_Temperature changed or
+    Time cron "0 0 0 * * ?" or
+    System started
+then
+    val max = Weather_Temperature.maximumSince(now.withTimeAtStartOfDay)
+    val min = Weather_Temperature.minimumSince(now.withTimeAtStartOfDay)
+    if (max !== null && min !== null) {
+        postUpdate(Weather_Temp_Max, max.state)
+        postUpdate(Weather_Temp_Min, min.state)
+    }
+end
+
+// Creates an item that stores the last update time of this item
+rule "Records last weather update time"
+when
+    Item Weather_Temperature received update
+then
+    postUpdate(Weather_LastUpdate, new DateTimeType())
+end
+
+rule "Set random wifi variations"
+when
+    System started or
+    Time cron "/20 * * * * ?"
+then
+    postUpdate(Wifi_Level, (Math::random * 4.0).intValue)
+end
+
+rule "Set random image URLs"
+when
+    Time cron "/10 * * * * ?"
+then
+    val url = urlList.get(random.nextInt(urlList.length))
+    val res = resList.get(random.nextInt(resList.length))
+
+    postUpdate(ImageURL, url + "/" + res)
+end
+
+rule "Volume"
+when
+    Item Volume received command
+then
+    if (receivedCommand instanceof PercentType) {
+        setMasterVolume(receivedCommand)
+    } else {
+        if (receivedCommand == INCREASE) increaseMasterVolume(20)
+        if (receivedCommand == DECREASE) decreaseMasterVolume(20)
+    }
+end
+
+rule "Select Radio Station"
+when
+    Item Radio_Station received command
+then
+    switch(receivedCommand) {
+        case 0 : playStream(null)
+        case 1 : playStream("http://metafiles.gl-systemhaus.de/hr/hr3_2.m3u")
+        case 2 : playStream("http://mp3-live.swr3.de/swr3_m.m3u")
+    }
+end
+
+// vim: syntax=Xtend
+/*
+rule "Wallplug_FF_LR_TV ON"
+when
+  Item Sonoff received command OFF 
+then
+  light_truong.sendCommand(ON)
+ // sendNotification("lehuutruong.sa.clc@gmail.com", "Front door was opened!")
+ //sendBroadcastNotification(message)
+end
+*/
+
+/*
+rule "do something if item state is 0 for more than 10 seconds"
+    when
+        Item Booking changed
+    then
+        if(Booking.state==0) {
+            timer = createTimer(now.plusSeconds(5) [|
+                light_truong.sendCommand(ON) 
+            ]
+        } else {
+            if(timer!=null) {
+                timer.cancel
+                timer = null
+            }
+        }
+    end
+*/
+
+/*
+rule "booking"
+when
+    Item Booking received command
+then
+    
+    if (receivedCommand == 30) {
+        sendCommand(place1, "Đã đặt trước")
+        if (timer === null) {
+            // first ON command, so create a timer to turn the light off again
+            timer = createTimer(now.plusMinutes(30)) [|
+                sendCommand(place1, "OFF")
+                sendCommand(Booking, 0)
+
+            ]
+        } else {
+            // subsequent ON command, so reschedule the existing timer
+            timer.reschedule(now.plusMinutes(30))
+        }
+        Timeleft.postUpdate(Booking.state as DecimalType -1)
+        timerleft = createTimer(now.plusMinutes(1)) [|
+        var remain = Timeleft.state as DecimalType - 1
+        if( remain < 0 ) remain = 0
+        Timeleft.postUpdate(remain)
+        if( remain > 0) timerleft.reschedule(now.plusMinutes(1))
+    ] 
+    } 
+    else if (receivedCommand == 45) {
+        sendCommand(place1, "Đã đặt trước")
+        if (timer === null) {
+            // first ON command, so create a timer to turn the light off again
+            timer = createTimer(now.plusMinutes(45)) [|
+                sendCommand(place1, "OFF")
+                sendCommand(Booking, 0)
+
+            ]
+        } else {
+            // subsequent ON command, so reschedule the existing timer
+            timer.reschedule(now.plusMinutes(45))
+        }
+        Timeleft.postUpdate(Booking.state as DecimalType -1)
+        timerleft = createTimer(now.plusMinutes(1)) [|
+        var remain = Timeleft.state as DecimalType - 1
+        if( remain < 0 ) remain = 0
+        Timeleft.postUpdate(remain)
+        if( remain > 0) timerleft.reschedule(now.plusMinutes(1))
+    ] 
+    } 
+    else if (receivedCommand == 60) {
+        sendCommand(place1, "Đã đặt trước")
+        if (timer === null) {
+            // first ON command, so create a timer to turn the light off again
+            timer = createTimer(now.plusMinutes(60)) [|
+                sendCommand(place1, "OFF")
+                sendCommand(Booking, 0)
+
+            ]
+        } else {
+            // subsequent ON command, so reschedule the existing timer
+            timer.reschedule(now.plusMinutes(60))
+        }
+        Timeleft.postUpdate(Booking.state as DecimalType -1)
+        timerleft = createTimer(now.plusMinutes(1)) [|
+        var remain = Timeleft.state as DecimalType - 1
+        if( remain < 0 ) remain = 0
+        Timeleft.postUpdate(remain)
+        if( remain > 0) timerleft.reschedule(now.plusMinutes(1))
+    ] 
+    } 
+    else if (receivedCommand == 0) {
+        // remove any previously scheduled timer
+        sendCommand(place1, "OFF")
+        Timeleft.postUpdate(0)
+        if (timer !== null) {
+            timer.cancel
+            timer = null
+        }
+    }
+end
+*/
+
+
+
+/*
+rule "thoigianconlai"
+when
+    Item Booking received command 
+then
+    Timeleft.postUpdate(Booking.state as DecimalType -1)
+    timerleft = createTimer(now.plusSeconds(1)) [|
+        var remain = Timeleft.state as DecimalType - 1
+        if( remain < 0 ) remain = 0
+        Timeleft.postUpdate(remain)
+        if( remain > 0) timerleft.reschedule(now.plusSeconds(1))
+    ] 
+end
+*/
+
+
+// thiet bi 1
+rule "ahkhac"
+when
+   
+  Item chot_sang_1 received command 1
+then
+  if(dat_sang_1.state==1) {
+  light_truong.sendCommand(ON)
+  dat_sang_1.postUpdate(0)
+  flag1.sendCommand(ON)
+  }
+  if(dat_sang_1.state==2) {
+  light_truong.sendCommand(ON)
+  dat_sang_1.postUpdate(0)
+  flag2.sendCommand(ON)
+  }
+  if(dat_sang_1.state==3) {
+  light_truong.sendCommand(ON)
+  dat_sang_1.postUpdate(0)
+  flag3.sendCommand(ON)
+  }
+  if(dat_sang_1.state==4) {
+  light_truong.sendCommand(ON)
+  dat_sang_1.postUpdate(0)
+  flag4.sendCommand(ON)
+  }
+  if(dat_sang_1.state==5) {
+  light_truong.sendCommand(ON)
+  dat_sang_1.postUpdate(0)
+  flag5.sendCommand(ON)
+  }
+end
+
+rule "ahkhaxxc"
+when
+   
+  Item chot_chieu_1 received command 1
+then
+  if(dat_chieu_1.state==1) {
+  light_truong.sendCommand(ON)
+  dat_chieu_1.postUpdate(0)
+  flag6.sendCommand(ON)
+  }
+  if(dat_chieu_1.state==2) {
+  light_truong.sendCommand(ON)
+  dat_chieu_1.postUpdate(0)
+  flag7.sendCommand(ON)
+  }
+  if(dat_chieu_1.state==3) {
+  light_truong.sendCommand(ON)
+  dat_chieu_1.postUpdate(0)
+  flag8.sendCommand(ON)
+  }
+  if(dat_chieu_1.state==4) {
+  light_truong.sendCommand(ON)
+  dat_chieu_1.postUpdate(0)
+  flag9.sendCommand(ON)
+  }
+  if(dat_chieu_1.state==5) {
+  light_truong.sendCommand(ON)
+  dat_chieu_1.postUpdate(0)
+  flag10.sendCommand(ON)
+  }
+end
+
+// thiet bi 2
+rule "ahkhhhhhhac"
+when
+   
+  Item chot_sang_2 received command 1
+then
+  if(dat_sang_2.state==1) {
+  light_truong.sendCommand(ON)
+  dat_sang_2.postUpdate(0)
+  flag11.sendCommand(ON)
+  }
+  if(dat_sang_2.state==2) {
+  light_truong.sendCommand(ON)
+  dat_sang_2.postUpdate(0)
+  flag12.sendCommand(ON)
+  }
+  if(dat_sang_2.state==3) {
+  light_truong.sendCommand(ON)
+  dat_sang_2.postUpdate(0)
+  flag13.sendCommand(ON)
+  }
+  if(dat_sang_2.state==4) {
+  light_truong.sendCommand(ON)
+  dat_sang_2.postUpdate(0)
+  flag14.sendCommand(ON)
+  }
+  if(dat_sang_2.state==5) {
+  light_truong.sendCommand(ON)
+  dat_sang_2.postUpdate(0)
+  flag15.sendCommand(ON)
+  }
+end
+
+rule "ahkhahhhxxc"
+when
+   
+  Item chot_chieu_2 received command 1
+then
+  if(dat_chieu_2.state==1) {
+  light_truong.sendCommand(ON)
+  dat_chieu_2.postUpdate(0)
+  flag16.sendCommand(ON)
+  }
+  if(dat_chieu_2.state==2) {
+  light_truong.sendCommand(ON)
+  dat_chieu_2.postUpdate(0)
+  flag17.sendCommand(ON)
+  }
+  if(dat_chieu_2.state==3) {
+  light_truong.sendCommand(ON)
+  dat_chieu_2.postUpdate(0)
+  flag18.sendCommand(ON)
+  }
+  if(dat_chieu_2.state==4) {
+  light_truong.sendCommand(ON)
+  dat_chieu_2.postUpdate(0)
+  flag19.sendCommand(ON)
+  }
+  if(dat_chieu_2.state==5) {
+  light_truong.sendCommand(ON)
+  dat_chieu_2.postUpdate(0)
+  flag20.sendCommand(ON)
+  }
+end
+
+// thiet bi 3
+rule "ahkhajc"
+when
+   
+  Item chot_sang_3 received command 1
+then
+  if(dat_sang_3.state==1) {
+  light_truong.sendCommand(ON)
+  dat_sang_3.postUpdate(0)
+  flag21.sendCommand(ON)
+  }
+  if(dat_sang_3.state==2) {
+  light_truong.sendCommand(ON)
+  dat_sang_3.postUpdate(0)
+  flag22.sendCommand(ON)
+  }
+  if(dat_sang_3.state==3) {
+  light_truong.sendCommand(ON)
+  dat_sang_3.postUpdate(0)
+  flag23.sendCommand(ON)
+  }
+  if(dat_sang_3.state==4) {
+  light_truong.sendCommand(ON)
+  dat_sang_3.postUpdate(0)
+  flag24.sendCommand(ON)
+  }
+  if(dat_sang_3.state==5) {
+  light_truong.sendCommand(ON)
+  dat_sang_3.postUpdate(0)
+  flag25.sendCommand(ON)
+  }
+end
+
+rule "ahkhaxaxc"
+when
+   
+  Item chot_chieu_3 received command 1
+then
+  if(dat_chieu_3.state==1) {
+  light_truong.sendCommand(ON)
+  dat_chieu_3.postUpdate(0)
+  flag26.sendCommand(ON)
+  }
+  if(dat_chieu_3.state==2) {
+  light_truong.sendCommand(ON)
+  dat_chieu_3.postUpdate(0)
+  flag27.sendCommand(ON)
+  }
+  if(dat_chieu_3.state==3) {
+  light_truong.sendCommand(ON)
+  dat_chieu_3.postUpdate(0)
+  flag28.sendCommand(ON)
+  }
+  if(dat_chieu_3.state==4) {
+  light_truong.sendCommand(ON)
+  dat_chieu_3.postUpdate(0)
+  flag29.sendCommand(ON)
+  }
+  if(dat_chieu_3.state==5) {
+  light_truong.sendCommand(ON)
+  dat_chieu_3.postUpdate(0)
+  flag30.sendCommand(ON)
+  }
+end
+
+// thiet bi 4
+rule "ahllkhac"
+when
+   
+  Item chot_sang_4 received command 1
+then
+  if(dat_sang_4.state==1) {
+  light_truong.sendCommand(ON)
+  dat_sang_4.postUpdate(0)
+  flag31.sendCommand(ON)
+  }
+  if(dat_sang_4.state==2) {
+  light_truong.sendCommand(ON)
+  dat_sang_4.postUpdate(0)
+  flag32.sendCommand(ON)
+  }
+  if(dat_sang_4.state==3) {
+  light_truong.sendCommand(ON)
+  dat_sang_4.postUpdate(0)
+  flag33.sendCommand(ON)
+  }
+  if(dat_sang_4.state==4) {
+  light_truong.sendCommand(ON)
+  dat_sang_4.postUpdate(0)
+  flag34.sendCommand(ON)
+  }
+  if(dat_sang_4.state==5) {
+  light_truong.sendCommand(ON)
+  dat_sang_4.postUpdate(0)
+  flag35.sendCommand(ON)
+  }
+end
+
+rule "ahkhalxxc"
+when
+   
+  Item chot_chieu_4 received command 1
+then
+  if(dat_chieu_4.state==1) {
+  light_truong.sendCommand(ON)
+  dat_chieu_4.postUpdate(0)
+  flag36.sendCommand(ON)
+  }
+  if(dat_chieu_4.state==2) {
+  light_truong.sendCommand(ON)
+  dat_chieu_4.postUpdate(0)
+  flag37.sendCommand(ON)
+  }
+  if(dat_chieu_4.state==3) {
+  light_truong.sendCommand(ON)
+  dat_chieu_4.postUpdate(0)
+  flag38.sendCommand(ON)
+  }
+  if(dat_chieu_4.state==4) {
+  light_truong.sendCommand(ON)
+  dat_chieu_4.postUpdate(0)
+  flag39.sendCommand(ON)
+  }
+  if(dat_chieu_4.state==5) {
+  light_truong.sendCommand(ON)
+  dat_chieu_4.postUpdate(0)
+  flag40.sendCommand(ON)
+  }
+end
+
+rule "hdh"
+when
+    Time cron "0 59 7 * * ?"
+then
+    flag1.sendCommand(OFF)
+    flag11.sendCommand(OFF)
+    flag21.sendCommand(OFF)
+    flag31.sendCommand(OFF)
+end
+
+rule "h1dh"
+when
+    Time cron "0 59 8 * * ?"
+then
+    flag2.sendCommand(OFF)
+    flag12.sendCommand(OFF)
+    flag22.sendCommand(OFF)
+    flag32.sendCommand(OFF)
+end
+
+rule "h2dh"
+when
+    Time cron "0 59 9 * * ?"
+then
+    flag3.sendCommand(OFF)
+    flag13.sendCommand(OFF)
+    flag23.sendCommand(OFF)
+    flag33.sendCommand(OFF)
+end
+
+rule "h3dh"
+when
+    Time cron "0 59 10 * * ?"
+then
+    flag4.sendCommand(OFF)
+    flag14.sendCommand(OFF)
+    flag24.sendCommand(OFF)
+    flag34.sendCommand(OFF)
+end
+
+rule "h4dh"
+when
+    Time cron "0 59 11 * * ?"
+then
+    flag5.sendCommand(OFF)
+    flag15.sendCommand(OFF)
+    flag25.sendCommand(OFF)
+    flag35.sendCommand(OFF)
+end
+
+rule "h5dh"
+when
+    Time cron "0 59 13 * * ?"
+then
+    flag6.sendCommand(OFF)
+    flag16.sendCommand(OFF)
+    flag26.sendCommand(OFF)
+    flag36.sendCommand(OFF)
+end
+
+rule "h6dh"
+when
+    Time cron "0 59 14 * * ?"
+then
+    flag7.sendCommand(OFF)
+    flag17.sendCommand(OFF)
+    flag27.sendCommand(OFF)
+    flag37.sendCommand(OFF)
+end
+
+rule "h7dh"
+when
+    Time cron "0 59 15 * * ?"
+then
+    flag8.sendCommand(OFF)
+    flag18.sendCommand(OFF)
+    flag28.sendCommand(OFF)
+    flag38.sendCommand(OFF)
+end
+
+rule "h8dh"
+when
+    Time cron "0 59 16 * * ?"
+then
+    flag9.sendCommand(OFF)
+    flag19.sendCommand(OFF)
+    flag29.sendCommand(OFF)
+    flag39.sendCommand(OFF)
+end
+
+rule "h9dh"
+when
+    Time cron "0 59 17 * * ?"
+then
+    flag10.sendCommand(OFF)
+    flag20.sendCommand(OFF)
+    flag30.sendCommand(OFF)
+    flag40.sendCommand(OFF)
+end
+
+rule "hh"
+when
+    Item light_truong received command OFF
+then
+    flag1.sendCommand(OFF)
+    flag2.sendCommand(OFF)
+    flag3.sendCommand(OFF)
+    flag4.sendCommand(OFF)
+    flag5.sendCommand(OFF)
+    flag6.sendCommand(OFF)
+    flag7.sendCommand(OFF)
+    flag8.sendCommand(OFF)
+    flag9.sendCommand(OFF)
+    flag10.sendCommand(OFF)
+    flag11.sendCommand(OFF)
+    flag12.sendCommand(OFF)
+    flag13.sendCommand(OFF)
+    flag14.sendCommand(OFF)
+    flag15.sendCommand(OFF)
+    flag16.sendCommand(OFF)
+    flag17.sendCommand(OFF)
+    flag18.sendCommand(OFF)
+    flag19.sendCommand(OFF)
+    flag10.sendCommand(OFF)
+    flag21.sendCommand(OFF)
+    flag22.sendCommand(OFF)
+    flag23.sendCommand(OFF)
+    flag24.sendCommand(OFF)
+    flag25.sendCommand(OFF)
+    flag26.sendCommand(OFF)
+    flag27.sendCommand(OFF)
+    flag28.sendCommand(OFF)
+    flag29.sendCommand(OFF)
+    flag30.sendCommand(OFF)
+    flag31.sendCommand(OFF)
+    flag32.sendCommand(OFF)
+    flag33.sendCommand(OFF)
+    flag34.sendCommand(OFF)
+    flag35.sendCommand(OFF)
+    flag36.sendCommand(OFF)
+    flag37.sendCommand(OFF)
+    flag38.sendCommand(OFF)
+    flag39.sendCommand(OFF)
+    flag40.sendCommand(OFF)
+end
+
+
+
+rule "locationn"
+when
+  Item location_text received update 
+then
+  
+  sendNotification("lehuutruong.sa.clc@gmail.com", "Alarm: Your vehicle is out of control")
+ sendBroadcastNotification(message)
+end

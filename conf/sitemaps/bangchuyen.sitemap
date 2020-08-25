@@ -1,0 +1,12 @@
+sitemap demo label="SYSTEM" {
+	Frame label="Number" {
+		Text item=soluong
+	}
+	Frame label="Feature"{
+		Text item=xanh
+		Text item=do
+	}
+	Frame label="Color" {
+		Text item=mausac
+	}
+}

@@ -1,0 +1,72 @@
+import org.openhab.core.library.types.*
+import org.openhab.model.script.actions.*
+
+import org.joda.time.*
+
+var Timer timerFon = null
+
+// As a precaution in case I restarted the Pi or there is a power cut, an OFF command is send at startup to the RFXcom switch 
+// This is because the timer would not exist after a restart or power cut and the switch would never receive the intended  OFF command
+
+rule "Initialize Fon switches on startup"
+when
+    System started
+then
+    sendCommand(Socket_02, OFF)
+    postUpdate(Fon_Timer_Selector,0)
+end
+
+
+// Start a timer using the value of the selection item in the UI
+
+rule "Turn Fon on for selected time"
+when
+    Item Fon_Timer_Selector changed
+then
+    logInfo("Fon_Timer_Selector", "changed")
+
+    val org.eclipse.xtext.xbase.lib.Functions$Function2 makeTimer = [
+        int myDelay,
+        org.eclipse.xtext.xbase.lib.Functions$Function2 makeTimer2 |
+            if(myDelay>0) {
+                postUpdate(Fon_Timer_Remaining, myDelay)
+                            // to save processes I only update UI once a minute
+                timerFon=createTimer(now.plusMinutes(1)) [|
+                postUpdate(Fon_Timer_Remaining, myDelay-1)
+                makeTimer2.apply(myDelay-1, makeTimer2)
+                ]
+            }else {
+                // timer reach zero
+                postUpdate(Fon_Timer_Selector,0)
+
+                // what I want to happen when the timer stops
+                sendCommand(Socket_02, OFF)
+                postUpdate(Fon_Timer_DateTime_Stop, new DateTimeType())
+            }
+    ]
+
+    // if the timer already exists, it will be canceled and replaced with a new one 
+    if(timerFon!=null) {
+        timerFon.cancel
+        timerFon=null
+        postUpdate(Fon_Timer_Remaining,0)
+    }
+
+    // extracts the value of the selection menu so you can set different times through the UI
+    var int int_Fon_Selection = (Fon_Timer_Selector.state as DecimalType).intValue
+
+    // updates the sitemap item straight away otherwise you have to wait 1 minute 
+    postUpdate(Fon_Timer_Remaining, int_Fon_Selection)
+
+    if(Fon_Timer_Selector.state>=15){
+        // start the timer if Fon_Timer_Selector is greater than 15 - could be any number greater than 0
+      logInfo("Fon_Timer_Selector", "state = " + Fon_Timer_Selector.state.toString())
+      makeTimer.apply(int_Fon_Selection,makeTimer)
+
+        // what I want to happen at the start of the timer
+      sendCommand(Socket_02, ON)
+      postUpdate(Fon_Timer_DateTime_Start, new DateTimeType())
+    }
+
+
+end

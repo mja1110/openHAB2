@@ -1,0 +1,63 @@
+Bridge mqtt:broker:hivemqbroker [ host="tailor.cloudmqtt.com",port=24392,secure=true,username="zfvbdvzp",password="eURfEh_8w9AH" ]
+{
+    Thing topic nodemcu 
+    {
+        Channels:
+          //  Type switch : light_1 [ stateTopic="light1/state", on="ON", off="OFF", commandTopic="smart/booking",on="ON", off="OFF"]
+            Type switch : light_truong [ stateTopic="light/state", on="ON", off="OFF", commandTopic="light/command",on="ON", off="OFF"]
+            Type switch : sonoff [ stateTopic="sonoff/state", on="ON", off="OFF", commandTopic="sonoff/command",on="ON", off="OFF"]
+            Type number : temperature [ stateTopic="environmental",transformationPattern="JSONPATH:$.temperature"]
+            Type number : humidity [stateTopic="environmental",transformationPattern="JSONPATH:$.humidity"]
+            Type number : air [stateTopic="environmental",transformationPattern="JSONPATH:$.MQ2"]
+            Type number : moisture [stateTopic="environmental",transformationPattern="JSONPATH:$.dust"]
+
+
+
+            Type string : place1 [ stateTopic="place1/state", on="ON",off="OFF",transformationPattern="JSONPATH:$.status",commandTopic="place1/command",on="ON", off="OFF"]
+            Type string : place2 [ stateTopic="place2/state", on="ON",off="OFF",transformationPattern="JSONPATH:$.status",commandTopic="place2/command",on="ON", off="OFF"]
+            Type string : place3 [ stateTopic="place3/state", on="ON",off="OFF",transformationPattern="JSONPATH:$.status",commandTopic="place3/command",on="ON", off="OFF"]
+            Type string : place4 [ stateTopic="place4/state", on="ON",off="OFF",transformationPattern="JSONPATH:$.status",commandTopic="place4/command",on="ON", off="OFF"]
+      //      Type string : place5 [ stateTopic="place5/state", on="ON", off="OFF",transformationPattern="JSONPATH:$.status"]
+      //      Type string : place6 [ stateTopic="place6/state", on="ON", off="OFF",transformationPattern="JSONPATH:$.status"]
+      //      Type string : place7 [ stateTopic="place7/state", on="ON", off="OFF",transformationPattern="JSONPATH:$.status"]
+      //      Type string : place8 [ stateTopic="place8/state", on="ON", off="OFF",transformationPattern="JSONPATH:$.status"]
+            
+            Type number : place1_ID [ stateTopic="place1/state",transformationPattern="JSONPATH:$.ID"]
+            Type number : place2_ID [ stateTopic="place2/state",transformationPattern="JSONPATH:$.ID"]
+            Type number : place3_ID [ stateTopic="place3/state",transformationPattern="JSONPATH:$.ID"]
+            Type number : place4_ID [ stateTopic="place4/state",transformationPattern="JSONPATH:$.ID"]
+      //      Type number : place5_ID [ stateTopic="place5/state",transformationPattern="JSONPATH:$.ID"]
+      //      Type number : place6_ID [ stateTopic="place6/state",transformationPattern="JSONPATH:$.ID"]
+      //      Type number : place7_ID [ stateTopic="place7/state",transformationPattern="JSONPATH:$.ID"]
+      //      Type number : place8_ID [ stateTopic="place8/state",transformationPattern="JSONPATH:$.ID"]
+            
+            Type string : place1_Name [ stateTopic="place1/state",transformationPattern="JSONPATH:$.Name"]
+            Type string : place2_Name [ stateTopic="place2/state",transformationPattern="JSONPATH:$.Name"]
+            Type string : place3_Name [ stateTopic="place3/state",transformationPattern="JSONPATH:$.Name"]
+            Type string : place4_Name [ stateTopic="place4/state",transformationPattern="JSONPATH:$.Name"]
+      //      Type string : place5_Name [ stateTopic="place5/state",transformationPattern="JSONPATH:$.Name"]
+      //      Type string : place6_Name [ stateTopic="place6/state",transformationPattern="JSONPATH:$.Name"]
+      //      Type string : place7_Name [ stateTopic="place7/state",transformationPattern="JSONPATH:$.Name"]
+      //      Type string : place8_Name [ stateTopic="place8/state",transformationPattern="JSONPATH:$.Name"]
+
+            Type number : place1_MSV [ stateTopic="place1/state",transformationPattern="JSONPATH:$.MSV"]
+            Type number : place2_MSV [ stateTopic="place2/state",transformationPattern="JSONPATH:$.MSV"]
+            Type number : place3_MSV [ stateTopic="place3/state",transformationPattern="JSONPATH:$.MSV"]
+            Type number : place4_MSV [ stateTopic="place4/state",transformationPattern="JSONPATH:$.MSV"]
+      //      Type number : place5_MSV [ stateTopic="place5/state",transformationPattern="JSONPATH:$.MSV"]
+      //      Type number : place6_MSV [ stateTopic="place6/state",transformationPattern="JSONPATH:$.MSV"]
+      //      Type number : place7_MSV [ stateTopic="place7/state",transformationPattern="JSONPATH:$.MSV"]
+      //      Type number : place8_MSV [ stateTopic="place8/state",transformationPattern="JSONPATH:$.MSV"]
+
+            Type string : place1_Class [ stateTopic="place1/state",transformationPattern="JSONPATH:$.Class"]
+            Type string : place2_Class [ stateTopic="place2/state",transformationPattern="JSONPATH:$.Class"]
+            Type string : place3_Class [ stateTopic="place3/state",transformationPattern="JSONPATH:$.Class"]
+            Type string : place4_Class [ stateTopic="place4/state",transformationPattern="JSONPATH:$.Class"]
+      //      Type string : place5_Class [ stateTopic="place5/state",transformationPattern="JSONPATH:$.Class"]
+      //      Type string : place6_Class [ stateTopic="place6/state",transformationPattern="JSONPATH:$.Class"]
+      //      Type string : place7_Class [ stateTopic="place7/state",transformationPattern="JSONPATH:$.Class"]
+      //      Type string : place8_Class [ stateTopic="place8/state",transformationPattern="JSONPATH:$.Class"]
+          
+    }
+}
+ntp:ntp:demo  [ hostname="nl.pool.ntp.org", refreshInterval=1, refreshNtp=30 ]

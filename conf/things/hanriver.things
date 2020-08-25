@@ -1,0 +1,43 @@
+Bridge mqtt:broker:causonghan  [host="tailor.cloudmqtt.com",port=24532,secure=true,username="xdzgpeqk",password="A4XlP5mIsKHw" ]
+{
+    Thing topic nodemcu
+    {
+    	Channels:
+            Type string : relay1 [ stateTopic="relay1", on="ON",off="OFF"]
+            Type string : relay2 [ stateTopic="relay2", on="ON",off="OFF"]
+            Type string : relay3 [ stateTopic="relay3", on="ON",off="OFF"]
+            Type string : relay4 [ stateTopic="relay4", on="ON",off="OFF"]
+            Type string : relay5 [ stateTopic="relay5", on="ON",off="OFF"]
+            Type string : relay6 [ stateTopic="relay6", on="ON",off="OFF"]
+            Type string : relay7 [ stateTopic="relay7", on="ON",off="OFF"]
+            Type string : relay8 [ stateTopic="relay8", on="ON",off="OFF"]
+            Type string : relay9 [ stateTopic="relay9", on="ON",off="OFF"]
+            Type string : relay10 [ stateTopic="relay10", on="ON",off="OFF"]
+            Type string : relay11 [ stateTopic="relay11", on="ON",off="OFF"]
+            Type string : relay12 [ stateTopic="relay12", on="ON",off="OFF"]
+			Type string : relay13 [ stateTopic="relay13", on="ON",off="OFF"]
+            Type string : relay14 [ stateTopic="relay14", on="ON",off="OFF"]
+            Type string : relay15 [ stateTopic="relay15", on="ON",off="OFF"]
+            Type string : relay16 [ stateTopic="relay16", on="ON",off="OFF"]
+            Type string : relay17 [ stateTopic="relay17", on="ON",off="OFF"]
+            Type string : relay18 [ stateTopic="relay18", on="ON",off="OFF"]
+            Type string : relay19 [ stateTopic="relay19", on="ON",off="OFF"]
+            Type string : relay20 [ stateTopic="relay20", on="ON",off="OFF"]
+
+            
+            Type string : switch1 [ stateTopic="switch1", on="ON",off="OFF"]
+            Type string : switch2 [ stateTopic="switch2", on="ON",off="OFF"]
+            Type string : switch3 [ stateTopic="switch3", on="ON",off="OFF"]
+            Type string : switch4 [ stateTopic="switch4", on="ON",off="OFF"]
+            Type string : switch5 [ stateTopic="switch5", on="ON",off="OFF"]
+            Type string : switch6 [ stateTopic="switch6", on="ON",off="OFF"]
+            Type string : switch7 [ stateTopic="switch7", on="ON",off="OFF"]
+            Type string : switch8 [ stateTopic="switch8", on="ON",off="OFF"]
+            Type string : switch9 [ stateTopic="switch9", on="ON",off="OFF"]
+            Type string : switch10 [ stateTopic="switch10", on="ON",off="OFF"]
+            Type string : switch11 [ stateTopic="switch11", on="ON",off="OFF"]
+            Type string : switch12 [ stateTopic="switch12", on="ON",off="OFF"]
+
+
+    }
+}

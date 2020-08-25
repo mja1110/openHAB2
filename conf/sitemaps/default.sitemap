@@ -1,0 +1,309 @@
+
+sitemap default label="BK Maker Club"
+{
+  /*
+    Frame label="Fon Switches" {
+  Selection item=Fon_Timer_Selector icon="clock" mappings=[0 = "Off",15 = "15 minutes",30 = "30 minutes",60 = "60 minutes",120 = "120 minutes"]
+  Text  item=Fon_Timer_Remaining visibility=[Fon_Timer_Selector>0] icon="clock"
+  Switch item=Socket_02 label="Fon power switch" icon="power" labelcolor=[Socket_02==ON="red"]
+}
+Frame label="Fon Info" {
+  Text item=Fon_Timer_Remaining
+  Text item=Fon_Timer_DateTime_Start
+  Text item=Fon_Timer_DateTime_Stop
+}
+ */
+    
+    Frame label="Date & Time" {
+       
+        Text item=CurrentDate
+        Text item=CurrentTime
+    }
+   
+    Frame label="Environment metrics" {
+        //Group item=Environment {
+            Text item=Moisture
+            Text item=Temperature
+            Text item=Humidity
+            Text item=Air
+        //    }
+    }
+   
+   
+    Frame label="Table 1" {
+        Group item=place1 {
+            Text item=place1 label="Trạng thái" icon="switch"
+            Text label= "User's information" icon="office" {
+                Text item=place1_ID label="ID"  visibility=[place1==ON]
+                Text item=place1_Name label="Name" visibility=[place1==ON]
+                Text item=place1_MSV label="MSV" visibility=[place1==ON]
+                Text item=place1_Class label="Class" visibility=[place1==ON]
+            }
+            Text label= "Đặt lịch" icon="time" {
+            //Selection item=Booking  mappings=[0="OFF",30="30 min", 45="45 min",60="1 hour"]
+            //Text item=Timeleft
+                Text label= "Sáng" icon="sun" {
+                    Selection item=dat_sang_1 label="Đặt lịch" icon="calendar" mappings=[1="7h00 đến 7h59",2="8h00 đến 8h59",3="9h00 đến 9h59",4="10h00 đến 10h59",5="11h00 đến 11h59"]
+                    Switch item=chot_sang_1 label="Xác nhận" icon="smiley" mappings=[1="Đặt"]
+                    
+                    Text  label="7h00 đến 7h59 đã có người đặt" icon="boy_1" visibility=[flag1==ON]
+                    Text  label="8h00 đến 8h59 đã có người đặt" icon="girl_1" visibility=[flag2==ON]
+                    Text  label="9h00 đến 9h59 đã có người đặt" icon="man_1" visibility=[flag3==ON]
+                    Text  label="10h00 đến 10h59 đã có người đặt" icon="woman_1" visibility=[flag4==ON]
+                    Text  label="11h00 đến 11h59 đã có người đặt" icon="parents_1_1" visibility=[flag5==ON]
+                }   
+                Text label= "Chiều" icon="sun_clouds" {
+                    Selection item=dat_chieu_1 label="Đặt lịch" icon="calendar" mappings=[1="13h00 đến 13h59",2="14h00 đến 14h59",3="15h00 đến 15h59",4="16h00 đến 16h59",5="17h00 đến 17h59"]
+                    Switch item=chot_chieu_1 label="Xác nhận" icon="smiley" mappings=[1="Đặt"]
+                    
+                    Text  label="13h00 đến 13h59 đã có người đặt" icon="man_6" visibility=[flag6==ON]
+                    Text  label="14h00 đến 14h59 đã có người đặt" icon="boy_5" visibility=[flag7==ON]
+                    Text  label="15h00 đến 15h59 đã có người đặt" icon="girl_6" visibility=[flag8==ON]
+                    Text  label="16h00 đến 16h59 đã có người đặt" icon="parents_2_6" visibility=[flag9==ON]
+                    Text  label="17h00 đến 17h59 đã có người đặt" icon="woman_5" visibility=[flag10==ON]
+                }
+            }
+            Text label="Danh sách đã đặt" icon="calendar" {
+                Text  label="7h00 đến 7h59 đã có người đặt" icon="boy_1"  visibility=[flag1==ON]
+                Text  label="8h00 đến 8h59 đã có người đặt" icon="girl_1" visibility=[flag2==ON]
+                Text  label="9h00 đến 9h59 đã có người đặt" icon="man_1" visibility=[flag3==ON]
+                Text  label="10h00 đến 10h59 đã có người đặt" icon="woman_1" visibility=[flag4==ON]
+                Text  label="11h00 đến 11h59 đã có người đặt" icon="parents_1_1" visibility=[flag5==ON]
+                Text  label="13h00 đến 13h59 đã có người đặt" icon="man_6" visibility=[flag6==ON]
+                Text  label="14h00 đến 14h59 đã có người đặt" icon="boy_5" visibility=[flag7==ON]
+                Text  label="15h00 đến 15h59 đã có người đặt" icon="girl_6" visibility=[flag8==ON]
+                Text  label="16h00 đến 16h59 đã có người đặt" icon="parents_2_6" visibility=[flag9==ON]
+                Text  label="17h00 đến 17h59 đã có người đặt" icon="woman_5" visibility=[flag10==ON]
+            }
+        }          
+        Group item=place2 {
+            Text item=place2 label="Trạng thái" icon="switch"
+            Text label= "User's information" icon="office" {
+                Text item=place2_ID label="ID" visibility=[place2==ON]
+                Text item=place2_Name label="Name" visibility=[place2==ON]
+                Text item=place2_MSV label="MSV" visibility=[place2==ON]
+                Text item=place2_Class label="Class" visibility=[place2==ON]
+            }
+            Text label= "Đặt lịch" icon="time" {
+                Text label= "Sáng" icon="sun" {
+                    Selection item=dat_sang_2 label="Đặt lịch" icon="calendar" mappings=[1="7h00 đến 7h59",2="8h00 đến 8h59",3="9h00 đến 9h59",4="10h00 đến 10h59",5="11h00 đến 11h59"]
+                    Switch item=chot_sang_2 label="Xác nhận" icon="smiley" mappings=[1="Đặt"]
+                    
+                    Text  label="7h00 đến 7h59 đã có người đặt" visibility=[flag11==ON]
+                    Text  label="8h00 đến 8h59 đã có người đặt" visibility=[flag12==ON]
+                    Text  label="9h00 đến 9h59 đã có người đặt" visibility=[flag13==ON]
+                    Text  label="10h00 đến 10h59 đã có người đặt" visibility=[flag14==ON]
+                    Text  label="11h00 đến 11h59 đã có người đặt" visibility=[flag15==ON]
+                }   
+                Text label= "Chiều" icon="sun_clouds" {
+                    Selection item=dat_chieu_2 label="Đặt lịch" icon="calendar" mappings=[1="13h00 đến 13h59",2="14h00 đến 14h59",3="15h00 đến 15h59",4="16h00 đến 16h59",5="17h00 đến 17h59"]
+                    Switch item=chot_chieu_2 label="Xác nhận" icon="smiley" mappings=[1="Đặt"]
+                    
+                    Text  label="13h00 đến 13h59 đã có người đặt" visibility=[flag16==ON]
+                    Text  label="14h00 đến 14h59 đã có người đặt" visibility=[flag17==ON]
+                    Text  label="15h00 đến 15h59 đã có người đặt" visibility=[flag18==ON]
+                    Text  label="16h00 đến 16h59 đã có người đặt" visibility=[flag19==ON]
+                    Text  label="17h00 đến 17h59 đã có người đặt" visibility=[flag20==ON]
+                }
+            }
+            Text label="Danh sách đã đặt" icon="calendar" {
+                Text  label="7h00 đến 7h59 đã có người đặt" visibility=[flag11==ON]
+                Text  label="8h00 đến 8h59 đã có người đặt" visibility=[flag12==ON]
+                Text  label="9h00 đến 9h59 đã có người đặt" visibility=[flag13==ON]
+                Text  label="10h00 đến 10h59 đã có người đặt" visibility=[flag14==ON]
+                Text  label="11h00 đến 11h59 đã có người đặt" visibility=[flag15==ON]
+                Text  label="13h00 đến 13h59 đã có người đặt" visibility=[flag16==ON]
+                Text  label="14h00 đến 14h59 đã có người đặt" visibility=[flag17==ON]
+                Text  label="15h00 đến 15h59 đã có người đặt" visibility=[flag18==ON]
+                Text  label="16h00 đến 16h59 đã có người đặt" visibility=[flag19==ON]
+                Text  label="17h00 đến 17h59 đã có người đặt" visibility=[flag20==ON]
+            }
+
+        }
+        
+    }
+    Frame label="Table 2" {
+        Group item=place3 {
+            Text item=place3 label="Trạng thái" icon="switch" 
+            Text label= "User's information" icon="office" {
+                Text item=place3_ID label="ID" visibility=[place3==ON]
+                Text item=place3_Name label="Name" visibility=[place3==ON]
+                Text item=place3_MSV label="MSV" visibility=[place3==ON]
+                Text item=place3_Class label="Class" visibility=[place3==ON]
+            }
+            Text label= "Đặt lịch" icon="time" {
+                Text label= "Sáng" icon="sun" {
+                    Selection item=dat_sang_3 label="Đặt lịch" icon="calendar" mappings=[1="7h00 đến 7h59",2="8h00 đến 8h59",3="9h00 đến 9h59",4="10h00 đến 10h59",5="11h00 đến 11h59"]
+                    Switch item=chot_sang_3 label="Xác nhận" icon="smiley" mappings=[1="Đặt"]
+                    
+                    Text  label="7h00 đến 7h59 đã có người đặt" visibility=[flag21==ON]
+                    Text  label="8h00 đến 8h59 đã có người đặt" visibility=[flag22==ON]
+                    Text  label="9h00 đến 9h59 đã có người đặt" visibility=[flag23==ON]
+                    Text  label="10h00 đến 10h59 đã có người đặt" visibility=[flag24==ON]
+                    Text  label="11h00 đến 11h59 đã có người đặt" visibility=[flag25==ON]
+                }   
+                Text label= "Chiều" icon="sun_clouds" {
+                    Selection item=dat_chieu_3 label="Đặt lịch" icon="calendar" mappings=[1="13h00 đến 13h59",2="14h00 đến 14h59",3="15h00 đến 15h59",4="16h00 đến 16h59",5="17h00 đến 17h59"]
+                    Switch item=chot_chieu_3 label="Xác nhận" icon="smiley" mappings=[1="Đặt"]
+                    
+                    Text  label="13h00 đến 13h59 đã có người đặt" visibility=[flag26==ON]
+                    Text  label="14h00 đến 14h59 đã có người đặt" visibility=[flag27==ON]
+                    Text  label="15h00 đến 15h59 đã có người đặt" visibility=[flag28==ON]
+                    Text  label="16h00 đến 16h59 đã có người đặt" visibility=[flag29==ON]
+                    Text  label="17h00 đến 17h59 đã có người đặt" visibility=[flag30==ON]
+                }
+            }
+            Text label="Danh sách đã đặt" icon="calendar" {
+                Text  label="7h00 đến 7h59 đã có người đặt" visibility=[flag21==ON]
+                Text  label="8h00 đến 8h59 đã có người đặt" visibility=[flag22==ON]
+                Text  label="9h00 đến 9h59 đã có người đặt" visibility=[flag23==ON]
+                Text  label="10h00 đến 10h59 đã có người đặt" visibility=[flag24==ON]
+                Text  label="11h00 đến 11h59 đã có người đặt" visibility=[flag25==ON]
+                Text  label="13h00 đến 13h59 đã có người đặt" visibility=[flag26==ON]
+                Text  label="14h00 đến 14h59 đã có người đặt" visibility=[flag27==ON]
+                Text  label="15h00 đến 15h59 đã có người đặt" visibility=[flag28==ON]
+                Text  label="16h00 đến 16h59 đã có người đặt" visibility=[flag29==ON]
+                Text  label="17h00 đến 17h59 đã có người đặt" visibility=[flag30==ON]
+            }
+        }
+        
+        
+        Group item=place4 {
+            Text item=place4 label="Trạng thái" icon="switch"
+            Text label= "User's information" icon="office" {
+                Text item=place4_ID label="ID" visibility=[place4==ON]
+                Text item=place4_Name label="Name"  visibility=[place4==ON]
+                Text item=place4_MSV label="MSV" visibility=[place4==ON]
+                Text item=place4_Class label="Class" visibility=[place4==ON]
+            }
+            Text label= "Đặt lịch" icon="time" {
+                Text label= "Sáng" icon="sun" {
+                    Selection item=dat_sang_4 label="Đặt lịch" icon="calendar" mappings=[1="7h00 đến 7h59",2="8h00 đến 8h59",3="9h00 đến 9h59",4="10h00 đến 10h59",5="11h00 đến 11h59"]
+                    Switch item=chot_sang_4 label="Xác nhận" icon="smiley" mappings=[1="Đặt"]
+                    
+                    Text  label="7h00 đến 7h59 đã có người đặt" visibility=[flag31==ON]
+                    Text  label="8h00 đến 8h59 đã có người đặt" visibility=[flag32==ON]
+                    Text  label="9h00 đến 9h59 đã có người đặt" visibility=[flag33==ON]
+                    Text  label="10h00 đến 10h59 đã có người đặt" visibility=[flag34==ON]
+                    Text  label="11h00 đến 11h59 đã có người đặt" visibility=[flag35==ON]
+                }   
+                Text label= "Chiều" icon="sun_clouds" {
+                    Selection item=dat_chieu_4 label="Đặt lịch" icon="calendar" mappings=[1="13h00 đến 13h59",2="14h00 đến 14h59",3="15h00 đến 15h59",4="16h00 đến 16h59",5="17h00 đến 17h59"]
+                    Switch item=chot_chieu_4 label="Xác nhận" icon="smiley" mappings=[1="Đặt"]
+                    
+                    Text  label="13h00 đến 13h59 đã có người đặt" visibility=[flag36==ON]
+                    Text  label="14h00 đến 14h59 đã có người đặt" visibility=[flag37==ON]
+                    Text  label="15h00 đến 15h59 đã có người đặt" visibility=[flag38==ON]
+                    Text  label="16h00 đến 16h59 đã có người đặt" visibility=[flag39==ON]
+                    Text  label="17h00 đến 17h59 đã có người đặt" visibility=[flag40==ON]
+                }
+            }
+            Text label="Danh sách đã đặt" icon="calendar" {
+                Text  label="7h00 đến 7h59 đã có người đặt" visibility=[flag31==ON]
+                Text  label="8h00 đến 8h59 đã có người đặt" visibility=[flag32==ON]
+                Text  label="9h00 đến 9h59 đã có người đặt" visibility=[flag33==ON]
+                Text  label="10h00 đến 10h59 đã có người đặt" visibility=[flag34==ON]
+                Text  label="11h00 đến 11h59 đã có người đặt" visibility=[flag35==ON]
+                Text  label="13h00 đến 13h59 đã có người đặt" visibility=[flag36==ON]
+                Text  label="14h00 đến 14h59 đã có người đặt" visibility=[flag37==ON]
+                Text  label="15h00 đến 15h59 đã có người đặt" visibility=[flag38==ON]
+                Text  label="16h00 đến 16h59 đã có người đặt" visibility=[flag39==ON]
+                Text  label="17h00 đến 17h59 đã có người đặt" visibility=[flag40==ON]
+            }
+        }
+         
+    }
+   
+
+Frame label="Light Control Panel" {
+        //Switch item=Light_1  mappings=[ON="on", OFF="off"]     
+        Switch item=Sonoff  mappings=[ON="on", OFF="off"]             //visibility=[light_truong==ON]
+        Switch item=light_truong  mappings=[ON="on", OFF="off"]
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   /* Frame label="Table 3" {
+        Group item=place5 {
+            Text item=place5 label="State" icon="switch"
+            Text item=place5_ID label="ID"
+            Text item=place5_Name label="Name"
+            Text item=place5_MSV label="MSV"
+            Text item=place5_Class label="Class"
+            Text item=place5 label="State" icon="switch"
+        }
+                
+        Group item=place6 {
+            Text item=place5 label="State" icon="switch"
+            Text item=place6_ID label="ID"
+            Text item=place6_Name label="Name"
+            Text item=place6_MSV label="MSV"
+            Text item=place6_Class label="Class"
+            
+        } 
+        
+    }
+    Frame label="Table 4" {
+        Group item=place7 {
+            Text item=place7 label="State" icon="office"
+            Text item=place7_ID label="ID"
+            Text item=place7_Name label="Name"
+            Text item=place7_MSV label="MSV"
+            Text item=place7_Class label="Class"
+            
+        }
+        
+        
+        Group item=place8 {
+            Text item=place8 label="State" icon="office"
+            Text item=place8_ID label="ID"
+            Text item=place8_Name label="Name"
+            Text item=place8_MSV label="MSV"
+            Text item=place8_Class label="Class"
+            
+        }   
+
+    }      */
+
+    
+/*	Frame label="Subscription Control Panel" {
+       //  Text item=Temperature                              //labelcolor=[>0="blue"] valuecolor=[Temperature==22="green"]
+		 Text item=time                                                     //Text item=Human
+     }
+*/    
+ //   Video url="https://youtu.be/lV5XmoWC8Mo?list=RDF_mhWxOjxp4" 
+ //   Webview label="Time" icon="time" url="https://www.clocktab.com/" height=5
+
+
+
+
+
+
+
+
+
+
+
+    //Frame label="Fan-AC Control Panel"  {
+    //  Switch item=Fan
+    //  Switch item=Ac
+    //}
+     /*
+    Webview label="web" icon="bath" url="http://www.openhab.org" height=15
+    Image url="https://raw.githubusercontent.com/wiki/openhab/openhab/images/features.png"  
+    */
+}

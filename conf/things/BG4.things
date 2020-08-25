@@ -1,0 +1,14 @@
+Bridge mqtt:broker:BG4 [ host="tailor.cloudmqtt.com",port=24392,secure=true,username="zfvbdvzp",password="eURfEh_8w9AH" ]
+{
+    Thing topic nodemcu
+    {
+    	Channels:
+            Type location : location [ stateTopic="location"]
+            Type string : location_text [ stateTopic="location"]
+            //Type switch : led [ stateTopic="led/state", on="ON", off="OFF", commandTopic="led/command",on="ON", off="OFF"]
+            
+            
+            
+    }
+
+}

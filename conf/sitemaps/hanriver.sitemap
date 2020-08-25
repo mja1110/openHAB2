@@ -1,0 +1,50 @@
+sitemap hanriver label="Cau song han"
+{
+
+	Frame label="Relay" 
+	{
+		Text item=relay1 label="Relay 1" icon="switch"
+		Text item=relay2 label="Relay 2" icon="switch"
+		Text item=relay3 label="Relay 3" icon="switch"
+		Text item=relay4 label="Relay 4" icon="switch"
+		Text item=relay5 label="Relay 5" icon="switch"
+		Text item=relay6 label="Relay 6" icon="switch"
+		Text item=relay7 label="Relay 7" icon="switch"
+		Text item=relay8 label="Relay 8" icon="switch"
+		Text item=relay9 label="Relay 9" icon="switch"
+		Text item=relay10 label="Relay 10" icon="switch"
+		Text item=relay11 label="Relay 11" icon="switch"
+		Text item=relay12 label="Relay 12" icon="switch"
+		Text item=relay13 label="Relay 13" icon="switch"
+		Text item=relay14 label="Relay 14" icon="switch"
+		Text item=relay15 label="Relay 15" icon="switch"
+		Text item=relay16 label="Relay 16" icon="switch"
+		Text item=relay17 label="Relay 17" icon="switch"
+		Text item=relay18 label="Relay 18" icon="switch"
+		Text item=relay19 label="Relay 19" icon="switch"
+		Text item=relay20 label="Relay 20" icon="switch"
+	}
+
+
+	
+	Frame label="Switch" 
+	{
+		Text item=switch1  icon="switch"
+		Text item=switch2  icon="switch"
+		Text item=switch3  icon="switch"
+		Text item=switch4  icon="switch"
+		Text item=switch5  icon="switch"
+		Text item=switch6  icon="switch"
+		Text item=switch7  icon="switch"
+		Text item=switch8  icon="switch"
+		Text item=switch9  icon="switch"
+		Text item=switch10  icon="switch"
+		Text item=switch11  icon="switch"
+		Text item=switch12  icon="switch"
+	}	
+	
+	
+	
+	
+	
+}

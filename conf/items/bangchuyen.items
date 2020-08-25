@@ -1,0 +1,9 @@
+//so luong
+Number soluong "NUMBER " <text> {channel = "mqtt:topic:bangchuyen:nodemcu:soluong"}
+//mau sac
+String mausac "COLOR" <colorpicker> {channel = "mqtt:topic:bangchuyen:nodemcu:mausac"}
+//xanh
+Number xanh "GREEN: " <text> {channel = "mqtt:topic:bangchuyen:nodemcu:xanh"}
+//do
+Number do "RED: " <text> {channel = "mqtt:topic:bangchuyen:nodemcu:do"}
+// mm

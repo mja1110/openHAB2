@@ -1,0 +1,24 @@
+sitemap BG4 label="Theo dau chan em"
+{
+/*
+	Frame label = "Image" {
+		Webview url="https://scontent.fdad2-1.fna.fbcdn.net/v/t1.0-9/106420274_2654614478198408_3215975111046756084_o.jpg?_nc_cat=108&_nc_sid=8bfeb9&_nc_oc=AQly9TlszFvlGkoFqhF2NzeVN0EqURqyt8e6KAPMGvsUZMrSlvXkl7S4AJxJ3SjMu5dyDc6vzQEKIqMln9GIKlC_&_nc_ht=scontent.fdad2-1.fna&oh=bd98de532dd5d5d4c50f5e76d235023e&oe=5F2553CB" height=10
+	}
+	*/
+	Frame label="Location" 
+	{
+		Text item=location_text label="Coordinates" icon="map"
+	}
+	Frame label="Map_OPENSTREETMAP" 
+	{
+		Mapview item=location icon=movecontrol height=20
+	}
+	Frame label="Map_GOOGLEMAP" 
+	{
+		Webview url="https://www.google.com/maps/" height=20
+	}
+	
+	
+	//Switch item=led
+	//Image url="https://i1.kym-cdn.com/photos/images/original/000/964/872/5b5.jpg"
+}

@@ -1,0 +1,13 @@
+Bridge mqtt:broker:bangchuyen [ host="localhost", secure=false ]
+{
+    Thing topic nodemcu
+    {
+    	Channels:
+            Type string : mausac [ stateTopic="mausac"]
+            Type number : soluong [ stateTopic="soluong" ]
+            Type number : xanh [ stateTopic="xanh" ]
+            Type number : do [ stateTopic="do" ]
+
+
+    }
+}

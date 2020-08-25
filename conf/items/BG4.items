@@ -1,0 +1,5 @@
+
+
+Location location "My Location " {channel="mqtt:topic:BG4:nodemcu:location"} /* // e.g. "49.26°N 123.19°E 0m" [%2$s°N %3$s°E %1$sm]  */
+String location_text {channel="mqtt:topic:BG4:nodemcu:location_text"}
+//Switch led "Led" <light>  {channel="mqtt:topic:BG4:nodemcu:led"}
